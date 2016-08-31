@@ -7,11 +7,14 @@ import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.TextView;
 
+import com.example.yao.android_question.R;
 import com.example.yao.pojo.question;
 
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -54,9 +57,52 @@ public class adapter_sou extends BaseAdapter{
 
         if (view==null){
 
-//            inflater.inflate(R.)
+            view=inflater.inflate(R.layout.sousuo_adapter,null);
+
+            holder=new viewHolder();
+
+            holder.tv_q= (TextView) view.findViewById(R.id.question_s);
+
+            holder.tv_t=(TextView)view.findViewById(R.id.leixing_s);
+
+            holder.tv_y= (TextView) view.findViewById(R.id.time_s);
+
+            view.setTag(holder);
+
+        }else {
+
+            holder= (viewHolder) view.getTag();
 
         }
+
+
+        holder.tv_q.setText(list.get(i).getContent());
+
+        int t=list.get(i).getType();
+
+        if (t==1){
+
+            holder.tv_t.setText("单选题");
+
+        }else if (t==2){
+
+            holder.tv_t.setText("多选题");
+
+        }else if (t==3){
+            holder.tv_t.setText("判断题");
+
+        }else if (t==4){
+
+            holder.tv_t.setText("简答题");
+
+        }
+
+        long l =list.get(i).getTime();
+
+        Date data = new Date(l);
+        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+        format.format(data);
+        holder.tv_y.setText(format.format(data));
 
         return view;
     }

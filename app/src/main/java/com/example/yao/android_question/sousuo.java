@@ -4,9 +4,13 @@ import android.app.Activity;
 import android.os.Bundle;
 import android.support.annotation.CallSuper;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.Toast;
 
 import com.example.yao.adapter.adapter_sou;
 import com.example.yao.dialog.MyDialog;
@@ -31,9 +35,9 @@ import java.util.List;
 
 public class sousuo extends AppCompatActivity {
 
-    @ViewInject(value = R.id.tv_sousuo)
+    @ViewInject(value = R.id.lv_sousuo)
 
-    private ListView tv_sousuo;
+    private ListView lv_sousuo;
 
     @ViewInject(value = R.id.ed_sousuo)
 
@@ -68,6 +72,8 @@ public class sousuo extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject result) {
 
+                Toast.makeText(sousuo.this, "。。。", Toast.LENGTH_SHORT).show();
+
                 dialog.dismiss();
 
                 try {
@@ -77,7 +83,16 @@ public class sousuo extends AppCompatActivity {
 
                     List<question> list = gson.fromJson(content.toString(),new TypeToken<List<question>>(){}.getType());
 
-//                    adapter_sou adapter = new adapter_sou(this,list);
+                    for (question q:list
+                         ) {
+
+                        Log.i("sousuo",q.toString()+"=================");
+
+                    }
+
+                    adapter_sou adapter = new adapter_sou(sousuo.this,list);
+
+                    lv_sousuo.setAdapter(adapter);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -87,6 +102,9 @@ public class sousuo extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
+
+                dialog.dismiss();
+                Toast.makeText(sousuo.this, "...", Toast.LENGTH_SHORT).show();
 
             }
 
@@ -103,6 +121,38 @@ public class sousuo extends AppCompatActivity {
 
 
 
+
     }
 
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case android.R.id.home:{
+
+                finish();
+                overridePendingTransition(R.anim.fanhui_in,R.anim.fanhui_out);
+                return true;
+            }
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        overridePendingTransition(R.anim.fanhui_in,R.anim.fanhui_out);
+
+    }
 }

@@ -74,7 +74,7 @@ public class fenlei extends AppCompatActivity {
 
         Intent it = new Intent(this,sousuo.class);
         startActivity(it);
-
+        overridePendingTransition(R.anim.welcome_in,R.anim.welcome_out);
         return super.onOptionsItemSelected(item);
     }
 
@@ -101,6 +101,8 @@ public class fenlei extends AppCompatActivity {
 
                 Intent it = new Intent(this,sousuo.class);
                 startActivity(it);
+
+                overridePendingTransition(R.anim.welcome_in,R.anim.welcome_out);
 
             }
 

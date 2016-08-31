@@ -10,20 +10,20 @@ public class question {
 
     private String content;
     private int id;
-    private String pubTime;
+    private long pubTime;
     private int typeid;
     private String answer;
     private int cataid ;
 
-    public question(String content, int id, String pubTime, String answer, int typeid, int cataid) {
+    public question(String content, int id, long pubTime, int typeid, String answer, int cataid) {
         this.content = content;
         this.id = id;
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
-        this.pubTime = format.format(pubTime);
+
+        this.pubTime=pubTime;
+        this.typeid=typeid;
 
         this.answer = answer;
-        this.typeid = typeid;
         this.cataid = cataid;
     }
 
@@ -47,14 +47,17 @@ public class question {
         this.id = id;
     }
 
-    public String getTime() {
+    public long getTime() {
         return pubTime;
     }
 
-    public void setTime(String pubTime) {
+    public void setTime(long pubTime) {
 
-        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
-        this.pubTime = format.format(pubTime);
+        this.pubTime=pubTime;
+
+//        Date data = new Date(pubTime);
+//        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
+//        this.pubTime = format.format(pubTime);
     }
 
     public int getType() {
@@ -62,7 +65,8 @@ public class question {
     }
 
     public void setType(int typeid) {
-        this.typeid = typeid;
+
+        this.typeid=typeid;
     }
 
     public String getAnswer() {
@@ -88,7 +92,7 @@ public class question {
                 "content='" + content + '\'' +
                 ", id=" + id +
                 ", pubTime='" + pubTime + '\'' +
-                ", typeid=" + typeid +
+                ", type=" + typeid +
                 ", answer='" + answer + '\'' +
                 ", cataid=" + cataid +
                 '}';

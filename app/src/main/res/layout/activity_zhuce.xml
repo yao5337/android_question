@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="com.example.yao.android_question.zhuce">
+
+
+    <EditText
+
+        android:id="@+id/ed_z_u"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="请输入用户名"
+        android:paddingLeft="15dp"
+        android:drawableLeft="@drawable/login_user"
+        android:drawablePadding="16dp"
+        android:background="@color/bai"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccccc"></View>
+
+    <EditText
+        android:id="@+id/ed_z_k"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="请输入密码"
+        android:paddingLeft="15dp"
+        android:drawableLeft="@drawable/login_key"
+        android:drawablePadding="16dp"
+        android:inputType="textPassword"
+        android:background="@color/bai"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccccc"></View>
+
+    <EditText
+
+        android:id="@+id/ed_z_n"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="请输入昵称"
+        android:paddingLeft="15dp"
+        android:background="@color/bai"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="#cccccc"></View>
+
+    <EditText
+        android:id="@+id/ed_z_p"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:hint="请输入电话号码"
+        android:paddingLeft="15dp"
+        android:inputType="textPassword"
+        android:background="@color/bai"/>
+
+    <Button
+        android:id="@+id/btn_z"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="25dp"
+        android:background="@drawable/login_but"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:text="注册"
+        android:textColor="@color/bai"/>
+
+</LinearLayout>

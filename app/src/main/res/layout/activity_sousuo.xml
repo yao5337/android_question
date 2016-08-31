@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_bg"
+    tools:context="com.example.yao.android_question.sousuo">
+
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/bai"
+        android:paddingRight="13dp"
+        android:paddingLeft="13dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp">
+
+        <TextView
+            android:id="@+id/tv_sousuo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索"
+            android:clickable="true"
+            android:textSize="15sp"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:paddingLeft="8dp"/>
+
+
+        <EditText
+            android:id="@+id/ed_sousuo"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/input_search_bg"
+            android:layout_toLeftOf="@id/tv_sousuo"
+            android:hint="搜索试题名称"/>
+
+
+
+    </RelativeLayout>
+
+
+    <ListView
+        android:id="@+id/lv_sousuo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"></ListView>
+
+
+</LinearLayout>

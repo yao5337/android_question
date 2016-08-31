@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.yao.android_question.MainActivity"
+    android:background="@color/main_bg"
+    android:orientation="vertical"
+    android:id="@+id/ll_w"
+    >
+
+    <ImageView
+        android:id="@+id/img_w"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="3"
+        android:scaleType="fitCenter"
+        android:src="@mipmap/welcome_ad"
+        android:background="@color/bai"/>
+
+
+
+    <RelativeLayout
+        android:layout_weight="1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        >
+        <TextView
+            android:id="@+id/tv_w"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Android题库"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="50dp"
+            android:background="#ff0000"
+            android:textColor="@color/bai"
+            android:textSize="22sp"
+            android:paddingLeft="8dp"
+            android:paddingRight="8dp"
+            android:textStyle="bold|italic"
+            />
+        <TextView
+            android:layout_toRightOf="@id/tv_w"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="有态度的题库软件"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:textSize="16sp"
+            android:textColor="@color/text_color"/>
+
+    </RelativeLayout>
+
+
+</LinearLayout>

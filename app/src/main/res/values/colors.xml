@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#3F51B5</color>
+    <color name="colorPrimaryDark">#303F9F</color>
+    <color name="colorAccent">#FF4081</color>
+    <color name="bai">#FFF</color>
+    <color name="actionbar_bg">#97282F</color>
+    <color name="main_bg">#99eeeeee</color>
+    <!-- 文本主颜色 -->
+    <color name="text_color">#999999</color>
+
+    <color name="btn_basic_bg">#D3434C</color>
+    <color name="btn_basic_degree_bg">#99292F</color>
+
+    <color name="hui">#cccccc</color>
+
+</resources>

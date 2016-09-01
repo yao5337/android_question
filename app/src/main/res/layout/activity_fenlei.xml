@@ -6,6 +6,7 @@
     android:orientation="vertical"
     tools:context="com.example.yao.android_question.fenlei">
 
+
     <android.support.v7.widget.Toolbar
 
         android:id="@+id/toolbar"
@@ -15,7 +16,17 @@
 
     </android.support.v7.widget.Toolbar>
 
-
     <include layout="@layout/cehua"></include>
+
+    <GridView
+        android:id="@+id/gv"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:numColumns="2"
+        android:columnWidth="300dp"
+        android:horizontalSpacing="20dp"
+        android:verticalSpacing="20dp"
+        android:stretchMode="spacingWidth" />
+
 
 </LinearLayout>

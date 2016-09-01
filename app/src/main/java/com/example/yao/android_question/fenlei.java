@@ -8,15 +8,29 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.GridView;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.example.yao.adapter.adapter_leibie;
+import com.example.yao.dialog.MyDialog;
+import com.example.yao.pojo.leibie;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import org.json.JSONArray;
+import org.xutils.common.Callback;
+import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
+
+import java.util.List;
 
 @ContentView(value = R.layout.activity_fenlei)
 
@@ -37,6 +51,10 @@ public class fenlei extends AppCompatActivity {
 
     private TextView chazhao_c;
 
+    @ViewInject(value = R.id.gv)
+
+    private GridView gv;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -56,8 +74,53 @@ public class fenlei extends AppCompatActivity {
 
         cehua.setDrawerListener(drawerToggle);
 
+        final MyDialog dialog = new MyDialog(this);
 
+        dialog.show();
 
+        RequestParams params = new RequestParams("http://115.29.136.118:8080/web-question/app/catalog?method=list");
+
+        x.http().get(params, new Callback.CommonCallback<JSONArray>() {
+            @Override
+            public void onSuccess(JSONArray result) {
+
+                dialog.dismiss();
+
+                Toast.makeText(fenlei.this, "。。。。", Toast.LENGTH_SHORT).show();
+
+                Gson gson=new Gson();
+
+                List<leibie> list = gson.fromJson(result.toString(),new TypeToken<List<leibie>>(){}.getType());
+
+                for (leibie l:
+                    list ) {
+                    Log.i("fenlei",l.toString());
+                }
+
+                adapter_leibie adapter = new adapter_leibie(fenlei.this,list);
+
+                gv.setAdapter(adapter);
+
+            }
+
+            @Override
+            public void onError(Throwable ex, boolean isOnCallback) {
+
+                Toast.makeText(fenlei.this, "....", Toast.LENGTH_SHORT).show();
+                dialog.dismiss();
+
+            }
+
+            @Override
+            public void onCancelled(CancelledException cex) {
+
+            }
+
+            @Override
+            public void onFinished() {
+
+            }
+        });
 
     }
 

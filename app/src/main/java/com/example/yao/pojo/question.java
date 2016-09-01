@@ -1,12 +1,13 @@
 package com.example.yao.pojo;
 
+import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 /**
  * Created by 89551 on 2016-08-31.
  */
-public class question {
+public class question implements Serializable {
 
     private String content;
     private int id;

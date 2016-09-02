@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/main_bg">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:background="@color/hui"
+        android:layout_marginTop="20dp"></View>
+
+    <TextView
+        android:id="@+id/content_q"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="问题"
+        android:padding="15dp"
+        android:background="@color/bai"
+        />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:padding="15dp"
+                android:text="答案"
+                android:background="@color/bai"/>
+
+            <TextView
+                android:id="@+id/answer"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:text="正确"
+                android:paddingLeft="15dp"/>
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</LinearLayout>

@@ -21,7 +21,11 @@
         <activity android:name=".login" />
         <activity android:name=".zhuce" />
         <activity android:name=".sousuo" />
-        <activity android:name=".fenlei" android:theme="@style/style_actionbar"></activity>
+        <activity
+            android:name=".fenlei"
+            android:theme="@style/style_actionbar" />
+        <activity android:name=".question_activity" />
+        <activity android:name=".question_list"></activity>
     </application>
 
 </manifest>

@@ -78,7 +78,7 @@ public class adapter_sou extends BaseAdapter{
 
         holder.tv_q.setText(list.get(i).getContent());
 
-        int t=list.get(i).getType();
+        int t=list.get(i).getTypeid();
 
         if (t==1){
 

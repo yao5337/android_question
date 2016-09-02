@@ -15,6 +15,7 @@ import com.example.yao.pojo.leibie;
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
 
+import java.io.File;
 import java.util.List;
 import java.util.zip.Inflater;
 
@@ -28,7 +29,7 @@ public class adapter_leibie extends BaseAdapter{
 
     public adapter_leibie(Context context, List<leibie> list) {
 
-         inflater = LayoutInflater.from(context);
+        inflater = LayoutInflater.from(context);
         this.list=list;
     }
 
@@ -73,7 +74,7 @@ public class adapter_leibie extends BaseAdapter{
                 .build()
                 ;
 
-        x.image().bind(holder.imageView,list.get(i).getIcon(),options);
+        x.image().bind(holder.imageView,"http://115.29.136.118:8080/web-question/"+list.get(i).getIcon(),options);
 
         holder.textView.setText(list.get(i).getName());
 

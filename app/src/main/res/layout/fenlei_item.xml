@@ -3,20 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@drawable/category_item_bg_p">
+    android:background="@drawable/fenlei_s">
 
     <ImageView
         android:id="@+id/imag_f_i"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:src="@mipmap/ic_launcher"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:layout_marginTop="30dp"/>
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="测试"
         android:id="@+id/tv_f_i"
-        android:layout_gravity="center"/>
+        android:layout_gravity="center"
+        android:paddingBottom="20dp"/>
 
 </LinearLayout>

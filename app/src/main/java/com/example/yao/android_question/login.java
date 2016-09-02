@@ -78,11 +78,13 @@ public class login extends AppCompatActivity {
                             if (success==true){
 
                                 JSONObject user1 = result.getJSONObject("user");
+                                int user_id = user1.getInt("id");
                                 String username = user1.getString("username");
                                 String password = user1.getString("password");
                                 String nickname = user1.getString("nickname");
 
                                 Intent it = new Intent(login.this,fenlei.class);
+                                it.putExtra("user_id",user_id);
                                 it.putExtra("username",username);
                                 it.putExtra("password",password);
                                 it.putExtra("nickname",nickname);

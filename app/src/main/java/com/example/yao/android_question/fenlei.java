@@ -1,6 +1,5 @@
 package com.example.yao.android_question;
 
-import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Color;
 import android.os.Bundle;
@@ -8,13 +7,12 @@ import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.GridView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.yao.adapter.adapter_leibie;
 import com.example.yao.dialog.MyDialog;
@@ -55,6 +53,12 @@ public class fenlei extends AppCompatActivity {
 
     private GridView gv;
 
+    @ViewInject(value = R.id.niname)
+
+    private TextView niname;
+
+    int user_id;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,6 +82,15 @@ public class fenlei extends AppCompatActivity {
 
         dialog.show();
 
+        Intent intent = getIntent();
+
+        user_id = intent.getIntExtra("user_id", 0);
+        String username = intent.getStringExtra("username");
+        String password = intent.getStringExtra("password");
+        String nickname = intent.getStringExtra("nickname");
+
+        niname.setText(nickname);
+
         RequestParams params = new RequestParams("http://115.29.136.118:8080/web-question/app/catalog?method=list");
 
         x.http().get(params, new Callback.CommonCallback<JSONArray>() {
@@ -86,27 +99,31 @@ public class fenlei extends AppCompatActivity {
 
                 dialog.dismiss();
 
-                Toast.makeText(fenlei.this, "。。。。", Toast.LENGTH_SHORT).show();
-
                 Gson gson=new Gson();
 
-                List<leibie> list = gson.fromJson(result.toString(),new TypeToken<List<leibie>>(){}.getType());
+                final List<leibie> list = gson.fromJson(result.toString(),new TypeToken<List<leibie>>(){}.getType());
 
-                for (leibie l:
-                    list ) {
-                    Log.i("fenlei",l.toString());
-                }
-
-                adapter_leibie adapter = new adapter_leibie(fenlei.this,list);
+                final adapter_leibie adapter = new adapter_leibie(fenlei.this,list);
 
                 gv.setAdapter(adapter);
+
+                gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    @Override
+                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+
+                        Intent it = new Intent(fenlei.this,question_list.class);
+                        it.putExtra("leixing",list.get(i));
+                        it.putExtra("userid",user_id);
+                        startActivity(it);
+                        overridePendingTransition(R.anim.welcome_in,R.anim.welcome_out);
+                    }
+                });
 
             }
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
 
-                Toast.makeText(fenlei.this, "....", Toast.LENGTH_SHORT).show();
                 dialog.dismiss();
 
             }
@@ -163,8 +180,8 @@ public class fenlei extends AppCompatActivity {
             case R.id.tv_chazhao_c:{
 
                 Intent it = new Intent(this,sousuo.class);
+                it.putExtra("userid",user_id);
                 startActivity(it);
-
                 overridePendingTransition(R.anim.welcome_in,R.anim.welcome_out);
 
             }

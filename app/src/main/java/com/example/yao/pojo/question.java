@@ -1,5 +1,9 @@
 package com.example.yao.pojo;
 
+import com.google.gson.JsonArray;
+
+import org.json.JSONObject;
+
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -15,17 +19,17 @@ public class question implements Serializable {
     private int typeid;
     private String answer;
     private int cataid ;
+    private String options=null;
 
-    public question(String content, int id, long pubTime, int typeid, String answer, int cataid) {
+
+    public question(String content, int id, long pubTime, int typeid, String answer, int cataid, String options) {
         this.content = content;
         this.id = id;
-
-
-        this.pubTime=pubTime;
-        this.typeid=typeid;
-
+        this.pubTime = pubTime;
+        this.typeid = typeid;
         this.answer = answer;
         this.cataid = cataid;
+        this.options = options;
     }
 
     public question() {
@@ -56,18 +60,14 @@ public class question implements Serializable {
 
         this.pubTime=pubTime;
 
-//        Date data = new Date(pubTime);
-//        SimpleDateFormat format = new SimpleDateFormat("yyyy年MM月dd日");
-//        this.pubTime = format.format(pubTime);
     }
 
-    public int getType() {
+    public int getTypeid() {
         return typeid;
     }
 
-    public void setType(int typeid) {
-
-        this.typeid=typeid;
+    public void setTypeid(int typeid) {
+        this.typeid = typeid;
     }
 
     public String getAnswer() {
@@ -86,16 +86,24 @@ public class question implements Serializable {
         this.cataid = cataid;
     }
 
+    public String getOptions() {
+        return options;
+    }
+
+    public void setOptions(String options) {
+        this.options = options;
+    }
 
     @Override
     public String toString() {
         return "question{" +
                 "content='" + content + '\'' +
                 ", id=" + id +
-                ", pubTime='" + pubTime + '\'' +
-                ", type=" + typeid +
+                ", pubTime=" + pubTime +
+                ", typeid=" + typeid +
                 ", answer='" + answer + '\'' +
                 ", cataid=" + cataid +
+                ", options='" + options + '\'' +
                 '}';
     }
 }

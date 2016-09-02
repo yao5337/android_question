@@ -1,19 +1,18 @@
 package com.example.yao.android_question;
 
+import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
-import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
-import android.widget.EditText;
 import android.widget.ListView;
-import android.widget.Toast;
 
 import com.example.yao.adapter.adapter_sou;
 import com.example.yao.dialog.MyDialog;
+import com.example.yao.pojo.leibie;
 import com.example.yao.pojo.question;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -24,65 +23,50 @@ import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.io.Serializable;
 import java.util.List;
 
-@ContentView(value = R.layout.activity_sousuo)
+@ContentView(value = R.layout.activity_question_list)
 
-public class sousuo extends AppCompatActivity {
+public class question_list extends AppCompatActivity {
 
-    @ViewInject(value = R.id.lv_sousuo)
+    @ViewInject(value = R.id.lv_l)
 
-    private ListView lv_sousuo;
-
-    @ViewInject(value = R.id.ed_sousuo)
-
-    private EditText ed_sousuo;
-
-    int userid;
+    private ListView lv_l;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-        setTitle("题目查找");
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         Intent intent = getIntent();
 
-        userid = intent.getIntExtra("userid", 0);
+        leibie leixing= (leibie) intent.getSerializableExtra("leixing");
 
-    }
+        final int userid = intent.getIntExtra("userid", 0);
 
-    @Event(value = R.id.tv_sousuo,type = View.OnClickListener.class)
+        setTitle(leixing.getName());
 
-    private void onClick(View view){
-
-        String timu = ed_sousuo.getText().toString();
+        getSupportActionBar().setHomeButtonEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         final MyDialog dialog = new MyDialog(this);
 
         dialog.show();
-
         RequestParams params = new RequestParams("http://115.29.136.118:8080/web-question/app/question?method=list");
-
-        params.addBodyParameter("questionName",timu);
+        
+        params.addBodyParameter("catalogId",leixing.getId()+"");
 
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
-            public void onSuccess(final JSONObject result) {
-
-                Toast.makeText(sousuo.this, "。。。", Toast.LENGTH_SHORT).show();
+            public void onSuccess(JSONObject result) {
 
                 dialog.dismiss();
 
                 try {
-
-                    final int totalElements = result.getInt("totalElements");
                     JSONArray content = result.getJSONArray("content");
 
                     Gson gson = new Gson();
@@ -91,25 +75,24 @@ public class sousuo extends AppCompatActivity {
 
                     for (question q :
                             list) {
-                        Log.i("sousuo",q.toString()+"====================");
+                        Log.i("question_list",q.toString());
                     }
 
-                    adapter_sou adapter = new adapter_sou(sousuo.this,list);
+                    adapter_sou adapter = new adapter_sou(question_list.this,list);
 
-                    lv_sousuo.setAdapter(adapter);
+                    lv_l.setAdapter(adapter);
 
-                    lv_sousuo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                    lv_l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                            Intent it = new Intent(sousuo.this, question_activity.class);
 
+                            Intent it = new Intent(question_list.this,question_activity.class);
                             it.putExtra("all",list.size());
                             it.putExtra("i",list.get(i));
                             it.putExtra("userid",userid);
 
                             startActivity(it);
-
                             overridePendingTransition(R.anim.welcome_in,R.anim.welcome_out);
 
                         }
@@ -126,7 +109,6 @@ public class sousuo extends AppCompatActivity {
 
                 dialog.dismiss();
 
-
             }
 
             @Override
@@ -140,14 +122,6 @@ public class sousuo extends AppCompatActivity {
             }
         });
 
-
-
-
-    }
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        return super.onCreateOptionsMenu(menu);
     }
 
     @Override
@@ -162,18 +136,12 @@ public class sousuo extends AppCompatActivity {
                 return true;
             }
 
+
             default:
                 return super.onOptionsItemSelected(item);
 
         }
 
-    }
-
-    @Override
-    public void onBackPressed() {
-
-        finish();
-        overridePendingTransition(R.anim.fanhui_in,R.anim.fanhui_out);
 
     }
 }

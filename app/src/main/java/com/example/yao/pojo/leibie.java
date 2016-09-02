@@ -1,5 +1,6 @@
 package com.example.yao.pojo;
 
+import java.io.File;
 import java.io.Serializable;
 
 /**
@@ -12,6 +13,7 @@ public class leibie implements Serializable {
     private String name;
 
     public leibie(int id, String icon, String name) {
+
         this.id = id;
         this.icon = icon;
         this.name = name;

@@ -1,9 +1,9 @@
 package com.example.yao.fregment;
 
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +12,7 @@ import android.widget.TextView;
 
 import com.example.yao.android_question.R;
 import com.example.yao.android_question.question_activity;
+import com.example.yao.pojo.question;
 import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
@@ -29,7 +30,12 @@ import java.util.Map;
 /**
  * Created by 89551 on 2016-09-02.
  */
-public class pan_f extends Fragment {
+public class xuan_f extends Fragment {
+
+    @Override
+    public void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override
@@ -47,9 +53,12 @@ public class pan_f extends Fragment {
 
         CheckBox checkBox4= (CheckBox) view.findViewById(R.id.cb_4);
 
-        content_p.setText(question_activity.i.getContent());
+        Bundle arguments = getArguments();
 
-        String options = question_activity.i.getOptions();
+        question i = (question) arguments.getSerializable("i");
+        content_p.setText(i.getContent());
+
+        String options = i.getOptions();
 
         JSONArray array = null;
         if (options!=null){
@@ -70,19 +79,19 @@ public class pan_f extends Fragment {
 
             list.add(checkBox4);
 
-            for (int i = 0 ; i<array.length();i++){
+            for (int a = 0 ; a<array.length();a++){
 
                 try {
-                    JSONObject object= new JSONObject(array.get(i).toString());
+                    JSONObject object= new JSONObject(array.get(a).toString());
 
                     String title = object.getString("title");
                     boolean checked = object.getBoolean("checked");
 
-                    list.get(i).setText(title);
+                    list.get(a).setText(title);
 
                     if (checked){
 
-                        list.get(i).setChecked(true);
+                        list.get(a).setChecked(true);
                     }
 
 

@@ -1,9 +1,9 @@
 package com.example.yao.fregment;
 
 
+import android.app.Fragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -21,11 +21,17 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.x;
 
+import java.io.Serializable;
+
 /**
  * Created by 89551 on 2016-09-02.
  */
 public class jian_f extends Fragment {
 
+    @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
 
     @Nullable
     @Override
@@ -37,9 +43,13 @@ public class jian_f extends Fragment {
 
         final TextView answer = (TextView) view.findViewById(R.id.answer);
 
-        content.setText(question_activity.i.getContent());
+        Bundle arguments = getArguments();
 
-        answer.setText(question_activity.i.getAnswer());
+        question i = (question) arguments.getSerializable("i");
+
+        content.setText(i.getContent());
+
+        answer.setText(i.getAnswer());
 
         return view;
     }

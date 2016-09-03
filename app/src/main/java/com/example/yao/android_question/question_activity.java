@@ -1,21 +1,18 @@
 package com.example.yao.android_question;
 
-import android.app.Activity;
+import android.app.Fragment;
+import android.app.FragmentManager;
+import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 
-import com.example.yao.adapter.fragmentAdapter;
 import com.example.yao.dialog.MyDialog;
 import com.example.yao.fregment.jian_f;
-import com.example.yao.fregment.pan_f;
+import com.example.yao.fregment.xuan_f;
 import com.example.yao.pojo.question;
-import com.google.gson.Gson;
-import com.google.gson.JsonArray;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -23,12 +20,8 @@ import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
-import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.io.File;
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 @ContentView(value = R.layout.activity_question)
@@ -37,12 +30,11 @@ public class question_activity extends AppCompatActivity {
 
     public static int userid;
 
-    @ViewInject(value = R.id.vp)
 
-    private ViewPager vp;
     public static question i;
 
     int all;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,16 +50,12 @@ public class question_activity extends AppCompatActivity {
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
-        List<Fragment> fragmentList = new ArrayList<Fragment>();
-
-        fragmentList.add(new jian_f());
-        fragmentList.add(new pan_f());
-        vp.setAdapter(new fragmentAdapter(getSupportFragmentManager(),fragmentList));
-
         get("http://115.29.136.118:8080/web-question/app/question?method=findone");
 
 
     }
+
+
 
     @Event(value = {R.id.shang,R.id.xia,R.id.shou},type = View.OnClickListener.class)
 
@@ -107,6 +95,10 @@ public class question_activity extends AppCompatActivity {
             public void onSuccess(JSONObject result) {
                 dialog.dismiss();
 
+                FragmentManager manager = getFragmentManager();
+                FragmentTransaction transaction = manager.beginTransaction();
+                Bundle bundle = new Bundle();
+
                 i=new question();
 
                 try {
@@ -128,12 +120,20 @@ public class question_activity extends AppCompatActivity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                    vp.setCurrentItem(1);
+                    bundle.putSerializable("i",i);
+                    xuan_f fragment = new xuan_f();
+                    fragment.setArguments(bundle);
+                    transaction.replace(R.id.rl_f,fragment);
+                    transaction.commit();
 
                 }else{
 
                     Log.i("question_activity",i.toString()+"===============");
-                    vp.setCurrentItem(0);
+                    bundle.putSerializable("i",i);
+                    jian_f fragment =new jian_f();
+                    fragment.setArguments(bundle);
+                    transaction.replace(R.id.rl_f,fragment);
+                    transaction.commit();
                 }
 
             }

@@ -28,6 +28,7 @@ import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @ContentView(value = R.layout.activity_sousuo)
@@ -82,12 +83,34 @@ public class sousuo extends AppCompatActivity {
 
                 try {
 
-                    final int totalElements = result.getInt("totalElements");
                     JSONArray content = result.getJSONArray("content");
 
                     Gson gson = new Gson();
+                    final List<question> list =gson.fromJson(content.toString(),new TypeToken<List<question>>(){}.getType());
 
-                    final List<question> list = gson.fromJson(content.toString(),new TypeToken<List<question>>(){}.getType());
+//                    final List<question> list = new ArrayList<question>();
+//
+//                    for (int i=0; i<content.length();i++){
+//
+//                        JSONObject object = (JSONObject) content.get(i);
+//
+//                        question q = new question();
+//
+//                        q.setContent(object.getString("content"));
+//
+//                        q.setTypeid(object.getInt("typeid"));
+//
+//                        q.setTime(object.getLong("pubTime"));
+//
+//                        if (q.getTypeid()==1||q.getTypeid()==2){
+//
+//                            q.setOptions(object.getJSONArray("options"));
+//
+//                        }
+//
+//                        list.add(q);
+//
+//                    }
 
                     for (question q :
                             list) {

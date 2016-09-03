@@ -27,6 +27,7 @@ import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 @ContentView(value = R.layout.activity_question_list)
@@ -67,11 +68,11 @@ public class question_list extends AppCompatActivity {
                 dialog.dismiss();
 
                 try {
+
                     JSONArray content = result.getJSONArray("content");
 
                     Gson gson = new Gson();
-
-                    final List<question> list = gson.fromJson(content.toString(),new TypeToken<List<question>>(){}.getType());
+                    final List<question> list =gson.fromJson(content.toString(),new TypeToken<List<question>>(){}.getType());
 
                     for (question q :
                             list) {

@@ -16,6 +16,7 @@ import com.google.gson.Gson;
 import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -46,44 +47,55 @@ public class pan_f extends Fragment {
 
         CheckBox checkBox4= (CheckBox) view.findViewById(R.id.cb_4);
 
-        String options = question_activity.q.getOptions();
+        content_p.setText(question_activity.i.getContent());
 
-        JsonArray array = new JsonArray();
+        String options = question_activity.i.getOptions();
 
-        array.add(options);
-
-        List<CheckBox> list = new ArrayList<CheckBox>();
-
-        list.add(checkBox1);
-
-        list.add(checkBox2);
-
-        list.add(checkBox3);
-
-        list.add(checkBox4);
-
-        for (int i = 0 ; i<array.size();i++){
+        JSONArray array = null;
+        if (options!=null){
 
             try {
-                JSONObject object= new JSONObject(array.get(i).toString());
-
-                String title = object.getString("title");
-                boolean checked = object.getBoolean("checked");
-
-                list.get(i).setText(title);
-
-                if (checked){
-
-                    list.get(i).setChecked(true);
-                }
-
-
+                array = new JSONArray(options);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
+            List<CheckBox> list = new ArrayList<CheckBox>();
+
+            list.add(checkBox1);
+
+            list.add(checkBox2);
+
+            list.add(checkBox3);
+
+            list.add(checkBox4);
+
+            for (int i = 0 ; i<array.length();i++){
+
+                try {
+                    JSONObject object= new JSONObject(array.get(i).toString());
+
+                    String title = object.getString("title");
+                    boolean checked = object.getBoolean("checked");
+
+                    list.get(i).setText(title);
+
+                    if (checked){
+
+                        list.get(i).setChecked(true);
+                    }
+
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+            }
+
         }
-        
+
+
+
         return  view;
 
     }

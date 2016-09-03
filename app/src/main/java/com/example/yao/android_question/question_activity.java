@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
+import android.util.Log;
 import android.view.View;
 
 import com.example.yao.adapter.fragmentAdapter;
@@ -14,7 +15,9 @@ import com.example.yao.fregment.jian_f;
 import com.example.yao.fregment.pan_f;
 import com.example.yao.pojo.question;
 import com.google.gson.Gson;
+import com.google.gson.JsonArray;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
@@ -32,29 +35,28 @@ import java.util.List;
 
 public class question_activity extends AppCompatActivity {
 
-    int userid;
+    public static int userid;
 
     @ViewInject(value = R.id.vp)
 
     private ViewPager vp;
-    question i;
+    public static question i;
+
+    int all;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
 
+        Log.i("question_activity","+++++++++++++++");
         Intent intent = getIntent();
-        int all = intent.getIntExtra("all", 0);
+        all = intent.getIntExtra("all", 0);
         i = (question) intent.getSerializableExtra("i");
         userid = intent.getIntExtra("userid", 0);
 
-        setTitle("第"+i+"/"+all+"道题");
-
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
-
-
 
         List<Fragment> fragmentList = new ArrayList<Fragment>();
 
@@ -91,27 +93,46 @@ public class question_activity extends AppCompatActivity {
 
     }
 
-    public static question q=null;
-    public question get(String url){
+    public void get(String url){
 
+        setTitle("第"+i.getId()+"/"+all+"道题");
         final MyDialog dialog = new MyDialog(this);
         dialog.show();
 
         RequestParams params = new RequestParams(url);
-        params.addBodyParameter("id",i.getTypeid()+"");
+        params.addBodyParameter("id",i.getId()+"");
         params.addBodyParameter("user_id",userid+"");
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
                 dialog.dismiss();
-                Gson gson = new Gson();
-                q=gson.fromJson(result.toString(),question.class);
 
-                if (q.getTypeid()==1||q.getTypeid()==2){
+                i=new question();
 
+                try {
+                    i.setContent(result.getString("content"));
+                    i.setId(result.getInt("id"));
+                    i.setAnswer(result.getString("answer"));
+                    i.setCataid(result.getInt("cataid"));
+                    i.setTime(result.getLong("pubTime"));
+                    i.setTypeid(result.getInt("typeid"));
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+
+                if (i.getTypeid()==1||i.getTypeid()==2){
+
+                    try {
+                        i.setOptions(result.getString("options"));
+                        Log.i("question_activity",i.toString()+"===============");
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     vp.setCurrentItem(1);
 
                 }else{
+
+                    Log.i("question_activity",i.toString()+"===============");
                     vp.setCurrentItem(0);
                 }
 
@@ -135,8 +156,6 @@ public class question_activity extends AppCompatActivity {
             }
         });
 
-
-        return q;
 
     }
 

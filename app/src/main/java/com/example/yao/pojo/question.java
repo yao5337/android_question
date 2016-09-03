@@ -1,12 +1,8 @@
 package com.example.yao.pojo;
 
-import com.google.gson.JsonArray;
-
-import org.json.JSONObject;
+import org.json.JSONArray;
 
 import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 
 /**
  * Created by 89551 on 2016-08-31.
@@ -19,7 +15,7 @@ public class question implements Serializable {
     private int typeid;
     private String answer;
     private int cataid ;
-    private String options=null;
+    private String options;
 
 
     public question(String content, int id, long pubTime, int typeid, String answer, int cataid, String options) {
@@ -96,14 +92,6 @@ public class question implements Serializable {
 
     @Override
     public String toString() {
-        return "question{" +
-                "content='" + content + '\'' +
-                ", id=" + id +
-                ", pubTime=" + pubTime +
-                ", typeid=" + typeid +
-                ", answer='" + answer + '\'' +
-                ", cataid=" + cataid +
-                ", options='" + options + '\'' +
-                '}';
+        return content+id+pubTime+typeid+answer+cataid+options;
     }
 }

@@ -1,18 +1,20 @@
-package com.example.yao.android_question;
+package com.example.yao.fregment;
 
-import android.app.Activity;
+import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
+import android.support.annotation.Nullable;
 import android.util.Log;
-import android.view.MenuItem;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.ListView;
 
 import com.example.yao.adapter.adapter_sou;
+import com.example.yao.android_question.R;
+import com.example.yao.android_question.question_activity;
 import com.example.yao.dialog.MyDialog;
-import com.example.yao.pojo.leibie;
 import com.example.yao.pojo.question;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
@@ -22,44 +24,34 @@ import org.json.JSONException;
 import org.json.JSONObject;
 import org.xutils.common.Callback;
 import org.xutils.http.RequestParams;
-import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
-@ContentView(value = R.layout.activity_question_list)
+/**
+ * Created by 89551 on 2016-09-04.
+ */
+public class lv_f extends Fragment {
 
-public class question_list extends AppCompatActivity {
 
-    @ViewInject(value = R.id.lv_l)
-
-    private ListView lv_l;
-
+    ListView lv_l;
+    int userid;
+    @Nullable
     @Override
-    protected void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-        x.view().inject(this);
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        Intent intent = getIntent();
+        View view = inflater.inflate(R.layout.fragment_lv, null);
 
-        leibie leixing= (leibie) intent.getSerializableExtra("leixing");
+        lv_l= (ListView) view.findViewById(R.id.lv_shoucang);
 
-        final int userid = intent.getIntExtra("userid", 0);
-
-        setTitle(leixing.getName());
-
-        getSupportActionBar().setHomeButtonEnabled(true);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        final MyDialog dialog = new MyDialog(this);
-
+        final MyDialog dialog = new MyDialog(getActivity());
         dialog.show();
-        RequestParams params = new RequestParams("http://115.29.136.118:8080/web-question/app/question?method=list");
-        
-        params.addBodyParameter("catalogId",leixing.getId()+"");
+
+        Bundle bundle = getArguments();
+        userid = bundle.getInt("userid");
+        RequestParams params = new RequestParams("http://115.29.136.118:8080/web-question/app/mng/store?method=list");
+
+        params.addBodyParameter("userId",userid+"");
 
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
@@ -79,7 +71,7 @@ public class question_list extends AppCompatActivity {
                         Log.i("question_list",q.toString());
                     }
 
-                    adapter_sou adapter = new adapter_sou(question_list.this,list);
+                    adapter_sou adapter = new adapter_sou(getActivity().getApplicationContext(),list);
 
                     lv_l.setAdapter(adapter);
 
@@ -87,13 +79,12 @@ public class question_list extends AppCompatActivity {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
 
-                            Intent it = new Intent(question_list.this,question_activity.class);
+                            Intent it = new Intent(getActivity(),question_activity.class);
                             it.putExtra("all",list.size());
                             it.putExtra("i",list.get(i));
                             it.putExtra("userid",userid);
                             it.putExtra("a",i+1);
                             startActivity(it);
-                            overridePendingTransition(R.anim.welcome_in,R.anim.welcome_out);
 
                         }
                     });
@@ -106,8 +97,6 @@ public class question_list extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
-                dialog.dismiss();
 
             }
 
@@ -122,26 +111,7 @@ public class question_list extends AppCompatActivity {
             }
         });
 
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-
-        switch (item.getItemId()){
-
-            case android.R.id.home:{
-
-                finish();
-                overridePendingTransition(R.anim.fanhui_in,R.anim.fanhui_out);
-                return true;
-            }
-
-
-            default:
-                return super.onOptionsItemSelected(item);
-
-        }
-
+        return view;
 
     }
 }

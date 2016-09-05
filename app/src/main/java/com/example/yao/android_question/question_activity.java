@@ -7,7 +7,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.Toast;
 
 import com.example.yao.dialog.MyDialog;
 import com.example.yao.fregment.jian_f;
@@ -29,24 +32,21 @@ import java.util.List;
 public class question_activity extends AppCompatActivity {
 
     public static int userid;
-
-
     public static question i;
 
     int all;
-
+    int a;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
-
-        Log.i("question_activity","+++++++++++++++");
         Intent intent = getIntent();
         all = intent.getIntExtra("all", 0);
         i = (question) intent.getSerializableExtra("i");
         userid = intent.getIntExtra("userid", 0);
-
+        a=intent.getIntExtra("a",0);
+        setTitle("第"+a+"/"+all+"道题");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setHomeButtonEnabled(true);
 
@@ -65,14 +65,84 @@ public class question_activity extends AppCompatActivity {
 
             case R.id.shang:{
 
-                get("http://115.29.136.118:8080/web-question/app/question?method=prev");
+                a--;
+
+                if(a>0&&a<=all){
+
+                    setTitle("第"+a+"/"+all+"道题");
+                    get("http://115.29.136.118:8080/web-question/app/question?method=prev");
+
+                }else{
+
+                    Toast.makeText(question_activity.this, "已经是最后一题", Toast.LENGTH_SHORT).show();
+
+                }
 
             }
             break;
 
             case R.id.xia:{
 
-                get("http://115.29.136.118:8080/web-question/app/question?method=next");
+                a++;
+                if(a>0&&a<=all){
+
+                    setTitle("第"+a+"/"+all+"道题");
+                    get("http://115.29.136.118:8080/web-question/app/question?method=next");
+
+                }else{
+
+                    Toast.makeText(question_activity.this, "已经是最后一题", Toast.LENGTH_SHORT).show();
+
+                }
+
+
+            }
+            break;
+
+            case R.id.shou:{
+
+                final MyDialog dialog = new MyDialog(this);
+                dialog.show();
+                RequestParams params = new RequestParams("http://115.29.136.118:8080/web-question/app/mng/store?method=add");
+                params.addBodyParameter("id",i.getId()+"");
+                params.addBodyParameter("user_id",userid+"");
+                
+                x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+
+                        try {
+                            boolean success = result.getBoolean("success");
+                            if (success){
+                                Toast.makeText(question_activity.this, "收藏成功", Toast.LENGTH_SHORT).show();
+                            }else {
+
+                                Toast.makeText(question_activity.this, result.getString("reason"), Toast.LENGTH_SHORT).show();
+
+                            }
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+                
 
             }
             break;
@@ -83,10 +153,8 @@ public class question_activity extends AppCompatActivity {
 
     public void get(String url){
 
-        setTitle("第"+i.getId()+"/"+all+"道题");
         final MyDialog dialog = new MyDialog(this);
         dialog.show();
-
         RequestParams params = new RequestParams(url);
         params.addBodyParameter("id",i.getId()+"");
         params.addBodyParameter("user_id",userid+"");
@@ -156,6 +224,38 @@ public class question_activity extends AppCompatActivity {
             }
         });
 
+
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        switch (item.getItemId()){
+
+            case android.R.id.home:{
+
+                finish();
+                overridePendingTransition(R.anim.fanhui_in,R.anim.fanhui_out);
+                return true;
+            }
+
+            default:
+                return super.onOptionsItemSelected(item);
+
+        }
+
+    }
+
+    @Override
+    public void onBackPressed() {
+
+        finish();
+        overridePendingTransition(R.anim.fanhui_in,R.anim.fanhui_out);
 
     }
 

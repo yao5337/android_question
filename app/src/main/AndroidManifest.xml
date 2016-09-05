@@ -25,7 +25,8 @@
             android:name=".fenlei"
             android:theme="@style/style_actionbar" />
         <activity android:name=".question_activity" />
-        <activity android:name=".question_list"></activity>
+        <activity android:name=".question_list" />
+        <activity android:name=".set"></activity>
     </application>
 
 </manifest>

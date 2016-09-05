@@ -88,35 +88,6 @@ public class sousuo extends AppCompatActivity {
                     Gson gson = new Gson();
                     final List<question> list =gson.fromJson(content.toString(),new TypeToken<List<question>>(){}.getType());
 
-//                    final List<question> list = new ArrayList<question>();
-//
-//                    for (int i=0; i<content.length();i++){
-//
-//                        JSONObject object = (JSONObject) content.get(i);
-//
-//                        question q = new question();
-//
-//                        q.setContent(object.getString("content"));
-//
-//                        q.setTypeid(object.getInt("typeid"));
-//
-//                        q.setTime(object.getLong("pubTime"));
-//
-//                        if (q.getTypeid()==1||q.getTypeid()==2){
-//
-//                            q.setOptions(object.getJSONArray("options"));
-//
-//                        }
-//
-//                        list.add(q);
-//
-//                    }
-
-                    for (question q :
-                            list) {
-                        Log.i("sousuo",q.toString()+"====================");
-                    }
-
                     adapter_sou adapter = new adapter_sou(sousuo.this,list);
 
                     lv_sousuo.setAdapter(adapter);
@@ -128,6 +99,7 @@ public class sousuo extends AppCompatActivity {
                             Intent it = new Intent(sousuo.this, question_activity.class);
 
                             it.putExtra("all",list.size());
+                            it.putExtra("a",i);
                             it.putExtra("i",list.get(i));
                             it.putExtra("userid",userid);
 

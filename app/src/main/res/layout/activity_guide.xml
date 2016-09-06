@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="utf-8"?>
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.yao.android_question.guide">
+
+    <android.support.v4.view.ViewPager
+        android:id="@+id/vp_o"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    </android.support.v4.view.ViewPager>
+
+    <RelativeLayout
+        android:layout_marginTop="530dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/image_two"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/src"
+            android:layout_centerInParent="true"
+            android:paddingLeft="40dp"
+            android:paddingRight="40dp"
+            />
+        <ImageView
+            android:id="@+id/image_one"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/src"
+            android:layout_toStartOf="@id/image_two"
+            />
+        <ImageView
+            android:id="@+id/image_three"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/src"
+            android:layout_toEndOf="@id/image_two"
+            />
+    </RelativeLayout>
+
+
+</FrameLayout>

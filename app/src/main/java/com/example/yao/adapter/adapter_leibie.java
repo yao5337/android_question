@@ -1,6 +1,8 @@
 package com.example.yao.adapter;
 
 import android.content.Context;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -11,6 +13,7 @@ import android.widget.TextView;
 import com.example.yao.android_question.R;
 import com.example.yao.android_question.fenlei;
 import com.example.yao.pojo.leibie;
+import com.example.yao.sharedPreferences.share;
 
 import org.xutils.image.ImageOptions;
 import org.xutils.x;
@@ -26,9 +29,9 @@ public class adapter_leibie extends BaseAdapter{
 
     LayoutInflater inflater;
     private List<leibie> list;
-
+    private Context context;
     public adapter_leibie(Context context, List<leibie> list) {
-
+        this.context=context;
         inflater = LayoutInflater.from(context);
         this.list=list;
     }
@@ -65,16 +68,34 @@ public class adapter_leibie extends BaseAdapter{
         }else {
             holder= (viewHolder) view.getTag();
         }
+        share share = new share(context,"a",context.MODE_PRIVATE);
+        boolean b = share.getB();
+        if (b){
+            ImageOptions options = new ImageOptions.Builder()
+                    .setIgnoreGif(false)
+                    .setFailureDrawableId(R.mipmap.ic_launcher)
+                    .setLoadingDrawableId(R.mipmap.ic_launcher)
+                    .setImageScaleType(ImageView.ScaleType.CENTER)
+                    .build()
+                    ;
 
-        ImageOptions options = new ImageOptions.Builder()
-                .setIgnoreGif(false)
-                .setFailureDrawableId(R.mipmap.ic_launcher)
-                .setLoadingDrawableId(R.mipmap.ic_launcher)
-                .setImageScaleType(ImageView.ScaleType.CENTER)
-                .build()
-                ;
+            x.image().bind(holder.imageView,"http://115.29.136.118:8080/web-question/"+list.get(i).getIcon(),options);
+        }else{
+            ConnectivityManager manager = (ConnectivityManager) context.getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo.State state = manager.getNetworkInfo(ConnectivityManager.TYPE_WIFI).getState();
+            if (state!=null&&state== NetworkInfo.State.CONNECTED){
+                ImageOptions options = new ImageOptions.Builder()
+                        .setIgnoreGif(false)
+                        .setFailureDrawableId(R.mipmap.ic_launcher)
+                        .setLoadingDrawableId(R.mipmap.ic_launcher)
+                        .setImageScaleType(ImageView.ScaleType.CENTER)
+                        .build()
+                        ;
 
-        x.image().bind(holder.imageView,"http://115.29.136.118:8080/web-question/"+list.get(i).getIcon(),options);
+                x.image().bind(holder.imageView,"http://115.29.136.118:8080/web-question/"+list.get(i).getIcon(),options);
+            }
+        }
+
 
         holder.textView.setText(list.get(i).getName());
 

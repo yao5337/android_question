@@ -52,13 +52,12 @@ public class sousuo extends AppCompatActivity {
         setTitle("题目查找");
         getSupportActionBar().setHomeButtonEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
         Intent intent = getIntent();
-
         userid = intent.getIntExtra("userid", 0);
-
+        foot = getLayoutInflater().inflate(R.layout.foot, null);
     }
 
+    View foot;
     @Event(value = R.id.tv_sousuo,type = View.OnClickListener.class)
 
     private void onClick(View view){
@@ -76,36 +75,30 @@ public class sousuo extends AppCompatActivity {
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(final JSONObject result) {
-
-                Toast.makeText(sousuo.this, "。。。", Toast.LENGTH_SHORT).show();
-
                 dialog.dismiss();
-
                 try {
 
                     JSONArray content = result.getJSONArray("content");
 
                     Gson gson = new Gson();
                     final List<question> list =gson.fromJson(content.toString(),new TypeToken<List<question>>(){}.getType());
-
                     adapter_sou adapter = new adapter_sou(sousuo.this,list);
-
+                    lv_sousuo.addFooterView(foot);
                     lv_sousuo.setAdapter(adapter);
-
                     lv_sousuo.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
-                            Intent it = new Intent(sousuo.this, question_activity.class);
-
-                            it.putExtra("all",list.size());
-                            it.putExtra("a",i);
-                            it.putExtra("i",list.get(i));
-                            it.putExtra("userid",userid);
-
-                            startActivity(it);
-
-                            overridePendingTransition(R.anim.welcome_in,R.anim.welcome_out);
+                            if (i<list.size()){
+                                Intent it = new Intent(sousuo.this, question_activity.class);
+                                it.putExtra("all",list.size());
+                                it.putExtra("a",i);
+                                it.putExtra("i",list.get(i));
+                                it.putExtra("userid",userid);
+                                startActivity(it);
+                                overridePendingTransition(R.anim.welcome_in,R.anim.welcome_out);
+                            }else {
+                                Toast.makeText(sousuo.this, "已加载全部", Toast.LENGTH_SHORT).show();
+                            }
 
                         }
                     });
@@ -118,10 +111,7 @@ public class sousuo extends AppCompatActivity {
 
             @Override
             public void onError(Throwable ex, boolean isOnCallback) {
-
                 dialog.dismiss();
-
-
             }
 
             @Override

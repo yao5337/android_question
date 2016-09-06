@@ -64,38 +64,28 @@ public class question_activity extends AppCompatActivity {
         switch (view.getId()){
 
             case R.id.shang:{
-
                 a--;
-
                 if(a>0&&a<=all){
-
                     setTitle("第"+a+"/"+all+"道题");
                     get("http://115.29.136.118:8080/web-question/app/question?method=prev");
-
                 }else{
-
+                    a=a+1;
                     Toast.makeText(question_activity.this, "已经是最后一题", Toast.LENGTH_SHORT).show();
-
                 }
 
             }
             break;
 
             case R.id.xia:{
-
                 a++;
                 if(a>0&&a<=all){
-
                     setTitle("第"+a+"/"+all+"道题");
                     get("http://115.29.136.118:8080/web-question/app/question?method=next");
 
                 }else{
-
+                    a=a-1;
                     Toast.makeText(question_activity.this, "已经是最后一题", Toast.LENGTH_SHORT).show();
-
                 }
-
-
             }
             break;
 
@@ -104,46 +94,38 @@ public class question_activity extends AppCompatActivity {
                 final MyDialog dialog = new MyDialog(this);
                 dialog.show();
                 RequestParams params = new RequestParams("http://115.29.136.118:8080/web-question/app/mng/store?method=add");
-                params.addBodyParameter("id",i.getId()+"");
-                params.addBodyParameter("user_id",userid+"");
-                
+                params.addBodyParameter("questionId",i.getId()+"");
+                params.addBodyParameter("userId",userid+"");
                 x.http().post(params, new Callback.CommonCallback<JSONObject>() {
                     @Override
                     public void onSuccess(JSONObject result) {
-
+                        dialog.dismiss();
                         try {
                             boolean success = result.getBoolean("success");
                             if (success){
                                 Toast.makeText(question_activity.this, "收藏成功", Toast.LENGTH_SHORT).show();
                             }else {
-
                                 Toast.makeText(question_activity.this, result.getString("reason"), Toast.LENGTH_SHORT).show();
-
                             }
-
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
 
                     }
-
                     @Override
                     public void onError(Throwable ex, boolean isOnCallback) {
-
+                        dialog.dismiss();
+                        Toast.makeText(question_activity.this, "...", Toast.LENGTH_SHORT).show();
                     }
 
                     @Override
                     public void onCancelled(CancelledException cex) {
-
                     }
 
                     @Override
                     public void onFinished() {
-
                     }
                 });
-                
-
             }
             break;
 
@@ -162,13 +144,10 @@ public class question_activity extends AppCompatActivity {
             @Override
             public void onSuccess(JSONObject result) {
                 dialog.dismiss();
-
                 FragmentManager manager = getFragmentManager();
                 FragmentTransaction transaction = manager.beginTransaction();
                 Bundle bundle = new Bundle();
-
                 i=new question();
-
                 try {
                     i.setContent(result.getString("content"));
                     i.setId(result.getInt("id"));
@@ -179,9 +158,7 @@ public class question_activity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
                 if (i.getTypeid()==1||i.getTypeid()==2){
-
                     try {
                         i.setOptions(result.getString("options"));
                         Log.i("question_activity",i.toString()+"===============");

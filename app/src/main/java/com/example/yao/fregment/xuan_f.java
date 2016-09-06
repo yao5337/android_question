@@ -54,36 +54,24 @@ public class xuan_f extends Fragment {
         CheckBox checkBox4= (CheckBox) view.findViewById(R.id.cb_4);
 
         Bundle arguments = getArguments();
-
         question i = (question) arguments.getSerializable("i");
         content_p.setText(i.getContent());
-
         String options = i.getOptions();
-
         JSONArray array = null;
         if (options!=null){
-
             try {
                 array = new JSONArray(options);
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-
             List<CheckBox> list = new ArrayList<CheckBox>();
-
             list.add(checkBox1);
-
             list.add(checkBox2);
-
             list.add(checkBox3);
-
             list.add(checkBox4);
-
             for (int a = 0 ; a<array.length();a++){
-
                 try {
                     JSONObject object= new JSONObject(array.get(a).toString());
-
                     String title = object.getString("title");
                     boolean checked = object.getBoolean("checked");
 
@@ -93,21 +81,11 @@ public class xuan_f extends Fragment {
 
                         list.get(a).setChecked(true);
                     }
-
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-
             }
-
         }
-
-
-
         return  view;
-
     }
-
-
 }

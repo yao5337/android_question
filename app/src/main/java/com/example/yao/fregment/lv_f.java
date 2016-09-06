@@ -4,6 +4,7 @@ import android.app.Fragment;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -36,45 +37,33 @@ public class lv_f extends Fragment {
 
     ListView lv_l;
     int userid;
+    MyDialog dialog;
+    List<question> list;
+    adapter_sou adapter;
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fragment_lv, null);
-
+        final SwipeRefreshLayout lv = (SwipeRefreshLayout) view.findViewById(R.id.sr_lv);
         lv_l= (ListView) view.findViewById(R.id.lv_shoucang);
-
-        final MyDialog dialog = new MyDialog(getActivity());
+        dialog = new MyDialog(getActivity());
         dialog.show();
 
         Bundle bundle = getArguments();
         userid = bundle.getInt("userid");
         RequestParams params = new RequestParams("http://115.29.136.118:8080/web-question/app/mng/store?method=list");
-
         params.addBodyParameter("userId",userid+"");
-
         x.http().post(params, new Callback.CommonCallback<JSONObject>() {
             @Override
             public void onSuccess(JSONObject result) {
-
                 dialog.dismiss();
-
                 try {
-
                     JSONArray content = result.getJSONArray("content");
-
                     Gson gson = new Gson();
-                    final List<question> list =gson.fromJson(content.toString(),new TypeToken<List<question>>(){}.getType());
-
-                    for (question q :
-                            list) {
-                        Log.i("question_list",q.toString());
-                    }
-
-                    adapter_sou adapter = new adapter_sou(getActivity().getApplicationContext(),list);
-
+                    list =gson.fromJson(content.toString(),new TypeToken<List<question>>(){}.getType());
+                    adapter = new adapter_sou(getActivity().getApplicationContext(),list);
                     lv_l.setAdapter(adapter);
-
                     lv_l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
                         @Override
                         public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
@@ -107,6 +96,62 @@ public class lv_f extends Fragment {
 
             @Override
             public void onFinished() {
+
+            }
+        });
+
+        lv.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                dialog.show();
+                RequestParams params = new RequestParams("http://115.29.136.118:8080/web-question/app/mng/store?method=list");
+                params.addBodyParameter("userId",userid+"");
+                x.http().post(params, new Callback.CommonCallback<JSONObject>() {
+                    @Override
+                    public void onSuccess(JSONObject result) {
+                        dialog.dismiss();
+                        try {
+                            JSONArray content = result.getJSONArray("content");
+                            Gson gson = new Gson();
+                            list.clear();
+                            list =gson.fromJson(content.toString(),new TypeToken<List<question>>(){}.getType());
+                            adapter = new adapter_sou(getActivity().getApplicationContext(),list);
+                            lv_l.setAdapter(adapter);
+                            lv_l.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                @Override
+                                public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                    Intent it = new Intent(getActivity(),question_activity.class);
+                                    it.putExtra("all",list.size());
+                                    it.putExtra("i",list.get(i));
+                                    it.putExtra("userid",userid);
+                                    it.putExtra("a",i+1);
+                                    startActivity(it);
+                                }
+                            });
+                            lv.setRefreshing(false);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+                    }
+
+                    @Override
+                    public void onError(Throwable ex, boolean isOnCallback) {
+                        dialog.dismiss();
+                    }
+
+                    @Override
+                    public void onCancelled(CancelledException cex) {
+
+                    }
+
+                    @Override
+                    public void onFinished() {
+
+                    }
+                });
+
 
             }
         });

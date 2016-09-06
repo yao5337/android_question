@@ -22,7 +22,6 @@ public class fragmentAdapter extends FragmentPagerAdapter {
         this.fragmentList=fragmentList;
     }
 
-
     @Override
     public android.support.v4.app.Fragment getItem(int position) {
         return fragmentList.get(position);

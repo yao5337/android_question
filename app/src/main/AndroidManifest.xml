@@ -3,6 +3,7 @@
     package="com.example.yao.android_question">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 
     <application
         android:name="com.example.yao.application.myApplication"
@@ -26,7 +27,8 @@
             android:theme="@style/style_actionbar" />
         <activity android:name=".question_activity" />
         <activity android:name=".question_list" />
-        <activity android:name=".set"></activity>
+        <activity android:name=".set" />
+        <activity android:name=".guide" android:theme="@style/style_actionbar"></activity>
     </application>
 
 </manifest>

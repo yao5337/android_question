@@ -17,13 +17,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="问题"
-        android:padding="15dp"
+        android:paddingLeft="15dp"
+        android:paddingTop="15dp"
+        android:paddingBottom="15dp"
         android:background="@color/bai"
         />
 
     <CheckBox
         android:id="@+id/cb_1"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:text="11"
@@ -31,7 +33,7 @@
 
     <CheckBox
         android:id="@+id/cb_2"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:text="11"
@@ -39,7 +41,7 @@
 
     <CheckBox
         android:id="@+id/cb_3"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:text="11"
@@ -47,7 +49,7 @@
 
     <CheckBox
         android:id="@+id/cb_4"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:text="11"

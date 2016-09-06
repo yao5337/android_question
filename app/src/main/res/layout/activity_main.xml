@@ -13,7 +13,7 @@
         android:id="@+id/img_w"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="3"
+        android:layout_weight="4"
         android:scaleType="fitCenter"
         android:src="@mipmap/welcome_ad"
         android:background="@color/bai"/>
@@ -48,6 +48,15 @@
             android:layout_marginLeft="10dp"
             android:textSize="16sp"
             android:textColor="@color/text_color"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_below="@id/tv_w"
+            android:paddingTop="10dp"
+            android:textColor="@color/text_color"
+            android:text="Copyright  2014-2015  ITVK.CN"/>
 
     </RelativeLayout>
 

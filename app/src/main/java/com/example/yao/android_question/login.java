@@ -43,9 +43,6 @@ public class login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
         setTitle("登录");
-
-
-
     }
 
     @Event(value ={ R.id.btn_l,R.id.tv_wangji_l,R.id.tv_zhuce_l},type = View.OnClickListener.class)
@@ -89,6 +86,7 @@ public class login extends AppCompatActivity {
                                 it.putExtra("password",password);
                                 it.putExtra("nickname",nickname);
                                 startActivity(it);
+                                finish();
                                 overridePendingTransition(R.anim.welcome_in,R.anim.welcome_out);
 
                             }
@@ -102,15 +100,11 @@ public class login extends AppCompatActivity {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
                     }
 
                     @Override
                     public void onError(Throwable ex, boolean isOnCallback) {
-
                         dialog.dismiss();
-                        Toast.makeText(login.this, "...", Toast.LENGTH_SHORT).show();
-
                     }
 
                     @Override

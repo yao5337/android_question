@@ -10,7 +10,6 @@ import com.example.yao.android_question.R;
  */
 public class MyDialog extends Dialog{
 
-
         public MyDialog(Context context) {
             super(context);
             setContentView(R.layout.dialog_l);
@@ -25,7 +24,6 @@ public class MyDialog extends Dialog{
         @Override
         public void dismiss() {
             super.dismiss();
-
         }
 
 

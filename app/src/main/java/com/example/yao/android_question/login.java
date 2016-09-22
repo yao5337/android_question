@@ -45,7 +45,7 @@ public class login extends AppCompatActivity {
         setTitle("登录");
     }
 
-    @Event(value ={ R.id.btn_l,R.id.tv_wangji_l,R.id.tv_zhuce_l},type = View.OnClickListener.class)
+    @Event(value ={ R.id.btn_l,R.id.tv_zhuce_l},type = View.OnClickListener.class)
 
     private void onClick(View view){
 

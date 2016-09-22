@@ -22,8 +22,9 @@
 
     <RelativeLayout
         android:layout_weight="1"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
         >
         <TextView
             android:id="@+id/tv_w"
@@ -31,12 +32,11 @@
             android:layout_height="wrap_content"
             android:text="Android题库"
             android:layout_centerVertical="true"
-            android:layout_marginLeft="50dp"
             android:background="#ff0000"
             android:textColor="@color/bai"
             android:textSize="22sp"
-            android:paddingLeft="8dp"
-            android:paddingRight="8dp"
+            android:paddingLeft="10dp"
+            android:paddingRight="10dp"
             android:textStyle="bold|italic"
             />
         <TextView
@@ -49,14 +49,7 @@
             android:textSize="16sp"
             android:textColor="@color/text_color"/>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_centerHorizontal="true"
-            android:layout_below="@id/tv_w"
-            android:paddingTop="10dp"
-            android:textColor="@color/text_color"
-            android:text="Copyright  2014-2015  ITVK.CN"/>
+
 
     </RelativeLayout>
 

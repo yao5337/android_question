@@ -8,6 +8,9 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.example.yao.android_question.R;
@@ -38,18 +41,25 @@ public class jian_f extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fregment_j, null);
-
+        final ScrollView sv = (ScrollView) view.findViewById(R.id.sv);
+        final EditText ed_w = (EditText) view.findViewById(R.id.ed_w);
+        Button btn_w = (Button) view.findViewById(R.id.btn_w);
+        final TextView tv_w = (TextView) view.findViewById(R.id.answer_w);
         final TextView content = (TextView) view.findViewById(R.id.content_q);
-
         final TextView answer = (TextView) view.findViewById(R.id.answer);
 
         Bundle arguments = getArguments();
-
-        question i = (question) arguments.getSerializable("i");
-
+        final question i = (question) arguments.getSerializable("i");
         content.setText(i.getContent());
-
-        answer.setText(i.getAnswer());
+        btn_w.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String my_a = ed_w.getText().toString();
+                tv_w.setText(my_a);
+                answer.setText(i.getAnswer());
+                sv.setVisibility(View.VISIBLE);
+            }
+        });
 
         return view;
     }

@@ -105,13 +105,52 @@ public class gv_f extends Fragment {
                     @Override
                     public void onSuccess(JSONArray result) {
                         dialog.dismiss();
-                        Gson g = new Gson();
-                        List<leibie> list0 = g.fromJson(result.toString(),new TypeToken<List<leibie>>(){}.getType());
-                        for (leibie l : list0) {
-                            list.add(l);
-                        }
-                        adapter.notifyDataSetChanged();
-                        rf.setRefreshing(false);
+//                        Gson g = new Gson();
+//                        list.clear();
+//                        List<leibie> list0 = g.fromJson(result.toString(),new TypeToken<List<leibie>>(){}.getType());
+//                        for (leibie l : list0) {
+//                            list.add(l);
+//                        }
+//                        adapter.notifyDataSetChanged();
+//                        rf.setRefreshing(false);
+                        RequestParams params = new RequestParams(url);
+
+                        x.http().get(params, new Callback.CommonCallback<JSONArray>() {
+                            @Override
+                            public void onSuccess(JSONArray result) {
+                                Gson gson=new Gson();
+                                list.clear();
+                                list = gson.fromJson(result.toString(),new TypeToken<List<leibie>>(){}.getType());
+                                adapter = new adapter_leibie(getActivity(),list);
+                                gv.setAdapter(adapter);
+                                gv.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                                    @Override
+                                    public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
+                                        Intent it = new Intent(getActivity(),question_list.class);
+                                        it.putExtra("leixing",list.get(i));
+                                        it.putExtra("userid",user_id);
+                                        startActivity(it);
+                                    }
+                                });
+                                rf.setRefreshing(false);
+                            }
+
+                            @Override
+                            public void onError(Throwable ex, boolean isOnCallback) {
+
+                            }
+
+                            @Override
+                            public void onCancelled(CancelledException cex) {
+
+                            }
+
+                            @Override
+                            public void onFinished() {
+
+                            }
+                        });
+
                     }
 
                     @Override

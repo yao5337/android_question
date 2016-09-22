@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.CheckBox;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.yao.android_question.R;
@@ -42,17 +43,17 @@ public class xuan_f extends Fragment {
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
         View view = inflater.inflate(R.layout.fregment_p, null);
-
+        TextView get = (TextView) view.findViewById(R.id.get_answer);
+        final LinearLayout ll = (LinearLayout) view.findViewById(R.id.ll_a);
         TextView content_p= (TextView) view.findViewById(R.id.content_p);
-
         CheckBox checkBox1= (CheckBox) view.findViewById(R.id.cb_1);
-
         CheckBox checkBox2= (CheckBox) view.findViewById(R.id.cb_2);
-
         CheckBox checkBox3= (CheckBox) view.findViewById(R.id.cb_3);
-
         CheckBox checkBox4= (CheckBox) view.findViewById(R.id.cb_4);
-
+        CheckBox checkBox1_w= (CheckBox) view.findViewById(R.id.cb_1_w);
+        CheckBox checkBox2_w= (CheckBox) view.findViewById(R.id.cb_2_w);
+        CheckBox checkBox3_w= (CheckBox) view.findViewById(R.id.cb_3_w);
+        CheckBox checkBox4_w= (CheckBox) view.findViewById(R.id.cb_4_w);
         Bundle arguments = getArguments();
         question i = (question) arguments.getSerializable("i");
         content_p.setText(i.getContent());
@@ -64,27 +65,46 @@ public class xuan_f extends Fragment {
             } catch (JSONException e) {
                 e.printStackTrace();
             }
-            List<CheckBox> list = new ArrayList<CheckBox>();
+            final List<CheckBox> list = new ArrayList<CheckBox>();
             list.add(checkBox1);
             list.add(checkBox2);
             list.add(checkBox3);
             list.add(checkBox4);
-            for (int a = 0 ; a<array.length();a++){
+            final JSONArray finalArray = array;
+            List<CheckBox> list_w=new ArrayList<CheckBox>();
+            list_w.add(checkBox1_w);
+            list_w.add(checkBox2_w);
+            list_w.add(checkBox3_w);
+            list_w.add(checkBox4_w);
+            for (int b = 0;b<finalArray.length();b++){
+                JSONObject object= null;
                 try {
-                    JSONObject object= new JSONObject(array.get(a).toString());
+                    object = new JSONObject(finalArray.get(b).toString());
                     String title = object.getString("title");
-                    boolean checked = object.getBoolean("checked");
-
-                    list.get(a).setText(title);
-
-                    if (checked){
-
-                        list.get(a).setChecked(true);
-                    }
+                    list_w.get(b).setText(title);
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
             }
+            get.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    ll.setVisibility(View.VISIBLE);
+                    for (int a = 0; a< finalArray.length(); a++){
+                        try {
+                            JSONObject object= new JSONObject(finalArray.get(a).toString());
+                            String title = object.getString("title");
+                            boolean checked = object.getBoolean("checked");
+                            list.get(a).setText(title);
+                            if (checked){
+                                list.get(a).setChecked(true);
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                }
+            });
         }
         return  view;
     }

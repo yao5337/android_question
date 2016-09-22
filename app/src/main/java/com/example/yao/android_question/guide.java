@@ -34,6 +34,7 @@ public class guide extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
+
         List<Fragment> list = new ArrayList<Fragment>();
         list.add(new one());
         list.add(new two());
@@ -59,6 +60,7 @@ public class guide extends AppCompatActivity {
         });
 
     }
+
     public void setPostion(int postion){
         one.setSelected(postion==0);
         two.setSelected(postion==1);

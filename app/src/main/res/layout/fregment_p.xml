@@ -24,7 +24,7 @@
         />
 
     <CheckBox
-        android:id="@+id/cb_1"
+        android:id="@+id/cb_1_w"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
@@ -32,7 +32,7 @@
         android:layout_height="wrap_content" />
 
     <CheckBox
-        android:id="@+id/cb_2"
+        android:id="@+id/cb_2_w"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
@@ -40,7 +40,7 @@
         android:layout_height="wrap_content" />
 
     <CheckBox
-        android:id="@+id/cb_3"
+        android:id="@+id/cb_3_w"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
@@ -48,12 +48,57 @@
         android:layout_height="wrap_content" />
 
     <CheckBox
-        android:id="@+id/cb_4"
+        android:id="@+id/cb_4_w"
         android:layout_width="match_parent"
         android:layout_marginTop="10dp"
         android:layout_marginLeft="15dp"
         android:text="11"
         android:layout_height="wrap_content" />
+    <TextView
+        android:id="@+id/get_answer"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="查看答案"
+        android:layout_marginLeft="300dp"
+        android:textSize="17sp"/>
 
+    <LinearLayout
+        android:id="@+id/ll_a"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:visibility="gone"
+        android:orientation="vertical">
+        <CheckBox
+            android:id="@+id/cb_1"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:text="11"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cb_2"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:text="11"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cb_3"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:text="11"
+            android:layout_height="wrap_content" />
+
+        <CheckBox
+            android:id="@+id/cb_4"
+            android:layout_width="match_parent"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="15dp"
+            android:text="11"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
 
 </LinearLayout>

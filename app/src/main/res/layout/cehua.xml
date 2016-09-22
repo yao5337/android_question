@@ -23,12 +23,14 @@
         android:orientation="vertical"
         >
         <LinearLayout
+            android:id="@+id/linear"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@mipmap/home_nav_title"
             android:orientation="vertical">
 
             <com.example.yao.view.CircleImageView
+                android:id="@+id/touxiang_t"
                 android:layout_width="100dp"
                 android:layout_height="100dp"
                 android:src="@mipmap/hugh"
@@ -139,6 +141,7 @@
 
 
         <RelativeLayout
+            android:id="@+id/relative"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingLeft="30dp"

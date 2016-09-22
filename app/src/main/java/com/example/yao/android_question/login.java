@@ -66,14 +66,10 @@ public class login extends AppCompatActivity {
                 x.http().post(params, new Callback.CommonCallback<JSONObject>() {
                     @Override
                     public void onSuccess(JSONObject result) {
-
                         dialog.dismiss();
-
                         try {
                             boolean success = result.getBoolean("success");
-
                             if (success==true){
-
                                 JSONObject user1 = result.getJSONObject("user");
                                 int user_id = user1.getInt("id");
                                 String username = user1.getString("username");
@@ -132,8 +128,4 @@ public class login extends AppCompatActivity {
 
         }
     }
-
-
-
-
 }
